@@ -60,7 +60,7 @@ namespace DT102G_WeightApp
                 app.UseHsts();
             }
 
-            var defaultCulture = new CultureInfo("en_US");
+            var defaultCulture = new CultureInfo("en-US");
             var localizationOptions = new RequestLocalizationOptions
             {
                 DefaultRequestCulture = new RequestCulture(defaultCulture),
