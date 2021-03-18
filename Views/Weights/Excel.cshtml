@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Excel";
+}
+
+<h1>Upload from Excel</h1>
+<hr />
+<div class="bg-color-blue text-white p-4 h5 mt-4 mb-4">
+    <p>
+        To be able to upload from an Excel file it need to bee on the format:
+    </p>
+    <p>
+        date | weight | comment
+    </p>
+</div>
+
+<h2>Example</h2>
+<p>
+    3/16/2021 | 85.5 | Today i reached my goal
+</p>
+<hr />
+<h2>Select upload file</h2>
+<form asp-controller="Weights" asp-action="Excel" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <hr />
+    <button type="submit">Upload</button>
+</form>

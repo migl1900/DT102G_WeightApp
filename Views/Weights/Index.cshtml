@@ -1,0 +1,134 @@
+﻿<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+@model IEnumerable<DT102G_WeightApp.Models.WeightViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Weights</h1>
+
+<div class="d-flex flex-column flex-md-row bg-color-blue text-white p-4 h5 mt-4">
+    <div class="w-100 mt-2">
+        <p>
+            Start date:
+            @if (ViewBag.UserInfo.StartDate != null)
+            {
+                @ViewBag.UserInfo.StartDate.ToString("yyyy-MM-dd")
+            }
+            else
+            {
+                <span>not set</span>
+            }
+        </p>
+        <p>
+            Start weight:
+            @if (ViewBag.UserInfo.StartWeight != null)
+            {
+                @ViewBag.UserInfo.StartWeight <span>kg</span>
+            }
+            else
+            {
+                <span>not set</span>
+            }
+        </p>
+    </div>
+    <div class="w-100 mt-2">
+        <p>
+            Target date:
+            @if (ViewBag.UserInfo.TargetDate != null)
+            {
+                @ViewBag.UserInfo.TargetDate.ToString("yyyy-MM-dd")
+            }
+            else
+            {
+                <span>not set</span>
+            }
+        </p>
+        <p>
+            Target weight:
+            @if (ViewBag.UserInfo.TargetWeight != null)
+            {
+                @ViewBag.UserInfo.TargetWeight <span>kg</span>
+            }
+            else
+            {
+                <span>not set</span>
+            }
+        </p>
+    </div>
+</div>
+
+<figure class="highcharts-figure mt-5">
+<div id = "container" ></div >
+</figure >
+<p>
+<a asp-action="Create">Add New</a> | <a asp-action= "Excel" > Upload from file</a>
+</p>
+<div class="d-md-flex flex-row d-none border-bottom p-3">
+<div class="w-100 font-weight-bold">@Html.DisplayNameFor(model => model.Date)</div>
+<div class="w-100 font-weight-bold">@Html.DisplayNameFor(model => model.Weight)</div>
+<div class="w-100 font-weight-bold">@Html.DisplayNameFor(model => model.Comment)</div>
+<div class="w-100"></div>
+</div>
+@foreach(var item in Model)
+    {
+<div class="d-flex flex-column flex-md-row border-bottom p-3">
+    <div class="d-md-none w-100 font-weight-bold">@Html.DisplayNameFor(model => model.Date)</div>
+    <div class="w-100">@Html.DisplayFor(modelItem => item.Date)</div>
+    <div class="d-md-none w-100 font-weight-bold">@Html.DisplayNameFor(model => model.Weight)</div>
+    <div class="w-100">@Html.DisplayFor(modelItem => item.Weight)</div>
+    <div class="d-md-none w-100 font-weight-bold">@Html.DisplayNameFor(model => model.Comment)</div>
+    <div class="w-100">@Html.DisplayFor(modelItem => item.Comment)</div>
+
+    <div class="w-100">
+        <a asp-action="Edit" asp-route-id="@item.WeightId">Edit</a> |
+        <a asp-action="Details" asp-route-id="@item.WeightId">Details</a> |
+        <a asp-action="Delete" asp-route-id="@item.WeightId">Delete</a>
+    </div>
+</div>
+}
+
+<script>
+var dates = new Array();
+var weights = new Array();
+@foreach(var item in Model)
+{
+    @:dates.push("@item.Date.ToString("yyyy-MM-dd")");
+    @:weights.push(parseFloat("@item.Weight"));
+}
+
+Highcharts.chart('container', {
+    chart: {
+        type: 'line'
+    },
+    title: {
+        text: 'Change in weight'
+    },
+    xAxis: {
+        categories: dates
+    },
+    yAxis: {
+        title: {
+            text: 'Weight (kg)'
+        }
+    },
+    plotOptions: {
+        line: {
+            dataLabels: {
+                enabled: true
+            },
+            enableMouseTracking: false
+        },
+        series: {
+            color: '#128091'
+        }
+    },
+    series: [{
+        name: 'Trend',
+        data: weights
+    }]
+});
+</script>

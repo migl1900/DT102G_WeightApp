@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div>
+    <h1 class="display-4">Welcome to Weight app</h1>
+    <h2>The best place to keep tabs on your weight</h2>
+    <div class="bg-color-blue text-white p-4 h5 mt-5 mb-1">
+        <p>
+            This application currently has @ViewBag.Users users.
+        </p>
+        <p>
+            Together they have logged @ViewBag.NrWeights weight entries.
+        </p>
+    </div>
+    <img src="~/images/belly.jpg" class="img-fluid" alt="Woman with too big pants" />
+</div>
